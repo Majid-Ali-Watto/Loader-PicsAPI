@@ -5,3 +5,5 @@ list of images data.
 
 # Loader
 html css custom loader is added.
+when api call is made , loader is enabled by default.
+after the call is completed, loader hides.
