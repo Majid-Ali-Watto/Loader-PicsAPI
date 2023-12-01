@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ES8 Project</title>
+
+  <script src="//unpkg.com/systemjs@0.19.47/dist/system.js"></script>
+<style>
+    body{
+        border: 1px solid magenta;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin:10px;
+    }
+    ul{
+        list-style: '☑️';
+    }
+    li{
+        background: 'smogwhite';
+        margin:10px;
+        padding: 5px 10px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+    }
+    div{
+        height: 40px;
+        width: 40px;
+        border: 2px solid red;
+        border-bottom: 2px solid forestgreen;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin{
+        0%{
+            transform: rotate(0deg)
+        }
+        100%{
+            transform: rotate(360deg)
+        }
+    }
+</style>
+</head>
+
+<body>
+  <script src="config.js"></script>
+  <div id="loading"></div>
+  <ul id="list"> </ul>
+</body>
+</html>
