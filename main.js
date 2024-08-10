@@ -1,69 +1,96 @@
+class APIs {
+	#url;
+	constructor(url) {
+		this.#url = url;
+	}
+	get url() {
+		return this.#url;
+	}
+	set url(url) {
+		this.#url = url;
+	}
+	async get() {
+		try {
+			let data = await fetch(this.#url);
+			return data.json();
+		} catch (e) {
+			alert(e.message);
+		}
+	}
+}
+let page = 1;
 
-class APIs
-{
-  #url
-  arr=[]
-    constructor(url){
-      this.#url=url
-    }
-  get url(){
-    return this.#url
-  }
-  set url(url){
-    this.#url=url
-  }
-  post(payloadset,config){
-  
-   // alert(payloadset.data.name)
-    const index= (payloadset.data.findIndex((obj)=>obj.age==22))
-     this.age=payloadset.data[index].age
-  }
-  async get(){
-        try {
-           // alert(this.#url)
-          let data=await fetch(this.#url)
-          console.log(data)
-         // data=data.json()
-          return data.json()
-      } catch (e) {
-          alert(e.errorMessage)
-      }
-      
-  }
+const api = new APIs(`https://picsum.photos/v2/list?page=${page}&limit=120`);
+
+const loading = document.getElementById("loading");
+const gallery = document.getElementById("gallery");
+const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+function createImageCard(image) {
+	const card = document.createElement("div");
+
+	const img = document.createElement("img");
+	img.src = image.download_url;
+	img.alt = image.author;
+	img.lazy = true;
+	const downloadBtn = document.createElement("button");
+	const span = document.createElement("span");
+	const section = document.createElement("section");
+	section.className = "download-author";
+  span.className='author-name';
+	span.innerText = image.author;
+	downloadBtn.className = "download-btn";
+	downloadBtn.innerText = "Download Image";
+	downloadBtn.addEventListener("click", () => {
+		downloadImage(image.download_url, `image-${image.id}.jpg`);
+	});
+
+	card.appendChild(img);
+	section.appendChild(downloadBtn);
+	section.appendChild(span);
+	card.appendChild(section);
+
+	return card;
 }
 
-const api=new APIs('https://jsonplaceholder.typicode.com/photos')
-//console.log(api.url)
-//api.url='yahoo.com'
-//console.log(api.url)
-api.post({
-  transition:'INIT',
-  data:[{
-    name: 'Majid Ali',
-    age: 24
-  },{
-    name:'Mehwish Majid',
-    age:22
-  }
-  ] 
-})
-const loading= document.getElementById('loading')
-loading.style.display='block'
-api.get().then((data)=>{
-       
-  // console.log(data)
-   loading.style.display='none'
-   const list= document.getElementById('list')
-   data.forEach((d)=>{
-   const li  = document.createElement('li')
-   //list.style.listStyle='numeric'
-  // li.style.margin='10px'
- //  li.style.padding='5px 10px'
- //  li.style.background='cyan'
-  // li.style.borderBottom='1px solid skyblue'
-      li.innerText=d.title
-    list.appendChild(li)
-   })
-}).catch((error)=>{
-    loading.style.display='none'
-    console.log(error)})
+async function downloadImage(url, filename) {
+	try {
+		const response = await fetch(url);
+		const blob = await response.blob();
+		const a = document.createElement("a");
+		a.href = URL.createObjectURL(blob);
+		a.download = filename;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(a.href); // Clean up
+	} catch (error) {
+		console.error("Error downloading the image", error);
+	}
+}
+
+function loadImages() {
+	loading.style.display = "block";
+	api
+		.get()
+		.then((data) => {
+			data?.forEach((image) => {
+				const card = createImageCard(image);
+				gallery.appendChild(card);
+			});
+			loading.style.display = "none";
+		})
+		.catch((error) => {
+			loading.style.display = "none";
+			console.log(error);
+		});
+}
+
+loadMoreBtn.addEventListener("click", () => {
+	page++;
+	api.url = `https://picsum.photos/v2/list?page=${page}&limit=100`;
+	loadImages();
+});
+
+// Initial load
+loadImages();
