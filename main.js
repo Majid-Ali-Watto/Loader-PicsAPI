@@ -55,6 +55,7 @@ function createImageCard(image) {
 
 async function downloadImage(url, filename) {
 	try {
+		loading.style.display = "block";
 		const response = await fetch(url);
 		const blob = await response.blob();
 		const a = document.createElement("a");
@@ -65,7 +66,9 @@ async function downloadImage(url, filename) {
 		document.body.removeChild(a);
 		URL.revokeObjectURL(a.href); // Clean up
 	} catch (error) {
-		console.error("Error downloading the image", error);
+		alert("Error downloading the image");
+	} finally {
+		loading.style.display = "none";
 	}
 }
 
@@ -82,7 +85,7 @@ function loadImages() {
 		})
 		.catch((error) => {
 			loading.style.display = "none";
-			console.log(error);
+			alert(error);
 		});
 }
 
