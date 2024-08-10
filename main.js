@@ -28,16 +28,16 @@ const loadMoreBtn = document.getElementById("loadMoreBtn");
 
 function createImageCard(image) {
 	const card = document.createElement("div");
-
+	loadMoreBtn.style.display = "block";
 	const img = document.createElement("img");
 	img.src = image.download_url;
 	img.alt = image.author;
-	img.lazy = true;
+	img.loading = "lazy"; // Apply lazy loading
 	const downloadBtn = document.createElement("button");
 	const span = document.createElement("span");
 	const section = document.createElement("section");
 	section.className = "download-author";
-  span.className='author-name';
+	span.className = "author-name";
 	span.innerText = image.author;
 	downloadBtn.className = "download-btn";
 	downloadBtn.innerText = "Download Image";
