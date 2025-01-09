@@ -1,0 +1,111 @@
+*,
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  padding: 0%;
+  margin: 0%;
+}
+
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#gallery div {
+  margin: 10px;
+  background: whitesmoke;
+  padding: 10px;
+  width: 100%;
+  height: fit-content;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#gallery div:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+#gallery img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+#gallery img:hover {
+  transform: scale(1.05);
+}
+
+.download-btn {
+  display: block;
+  margin: 10px 0 0;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  background-color: lightblue;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.download-btn:hover {
+  background-color: deepskyblue;
+}
+
+.author-name {
+  color: black !important;
+  font-size: 0.9em;
+}
+
+.author-name:hover {
+  color: transparent;
+  transition: color 0.3s ease;
+  text-shadow: 1px 1px 1px rgba(59, 59, 59, 0.9);
+}
+
+.download-author {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#loadMoreBtn {
+  display: flex;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 1em;
+  background-color: skyblue;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#loadMoreBtn:hover {
+  background-color: deepskyblue;
+  transform: translateY(-5px);
+}
+.share-btn {
+  display: block;
+  margin: 10px 0 0;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  background-color: lightgreen;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.share-btn:hover {
+  background-color: limegreen;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 768px) {
+  #gallery div {
+    width: calc(50% - 20px);
+  }
+}
